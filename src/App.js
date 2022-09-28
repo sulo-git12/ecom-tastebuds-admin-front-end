@@ -5,9 +5,7 @@ import Home from "./pages/Home";
 import Item from "./pages/Item";
 import Outlet from "./pages/Outlet";
 import Profile from "./pages/Profile";
-
-// import "bootstrap/dist/css/bootstrap.css";
-import "./styles/master.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (

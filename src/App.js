@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Item from "./pages/Item";
 import Outlet from "./pages/Outlet";
 import Profile from "./pages/Profile";
+import Login from "./pages/Login";
 
 // import "bootstrap/dist/css/bootstrap.css";
 import "./styles/master.css";
@@ -13,6 +14,11 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <Routes>
+          <Route path="/Admin/Login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+      {/* <BrowserRouter>
         <NavigationBar />
 
         <Routes>
@@ -23,7 +29,7 @@ function App() {
         </Routes>
       </BrowserRouter>
 
-      <Footer />
+      <Footer /> */}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import NavigationBar from "./components/NavigationBar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Item from "./pages/Item";
+import { S3ImageUpload } from "./pages/S3ImageUpload";
 import Outlet from "./pages/Outlet";
 import AdminLogin from "./pages/AdminLogin";
 import EditOutlet from "./pages/EditOutlet";
@@ -22,6 +23,8 @@ function App() {
           <Route path="/Admin/Item" element={<Item />} />
           <Route path="/Admin/Outlet" element={<Outlet />} />
           <Route path="/Admin/EditOutlet" element={<EditOutlet />} />
+          <Route path="/Admin/Upload" element={<S3ImageUpload />} />
+          
         </Routes>
       </BrowserRouter>
       <Footer />

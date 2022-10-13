@@ -5,25 +5,28 @@ import Home from "./pages/Home";
 import Item from "./pages/Item";
 import { S3ImageUpload } from "./pages/S3ImageUpload";
 import Outlet from "./pages/Outlet";
-import Profile from "./pages/Profile";
-import "bootstrap/dist/css/bootstrap.min.css";
+import AdminLogin from "./pages/AdminLogin";
+import EditOutlet from "./pages/EditOutlet";
+
+import "bootstrap/dist/css/bootstrap.css";
+import 'semantic-ui-css/semantic.min.css'
+import "./styles/master.css";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <NavigationBar />
-
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<AdminLogin />} />
           <Route path="/Admin/Home" element={<Home />} />
           <Route path="/Admin/Item" element={<Item />} />
           <Route path="/Admin/Outlet" element={<Outlet />} />
+          <Route path="/Admin/EditOutlet" element={<EditOutlet />} />
           <Route path="/Admin/Upload" element={<S3ImageUpload />} />
-          <Route path="/Admin/Profile" element={<Profile />} />
+          
         </Routes>
       </BrowserRouter>
-
       <Footer />
     </div>
   );

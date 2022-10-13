@@ -1,0 +1,14 @@
+.table-responsive {
+    max-height:300px;
+}
+
+.table_head{
+    position: sticky;
+    top: 0px;
+    margin: 0 0 0 0;
+}
+
+.tableScroll{
+    height: 244px;
+    overflow: scroll;
+}

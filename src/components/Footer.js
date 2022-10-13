@@ -4,10 +4,10 @@ import "../styles/master.css";
 const Footer = () => {
   return (
     <div className="footer">
-      <p>
-        © Copyright © 2022 - NIBM Software Solutions Lanka (Pvt) Ltd. All rights
+      <h6>
+        © Copyright © 2022 - OBS Software Solutions Lanka (Pvt) Ltd. All rights
         reserved.
-      </p>
+      </h6>
     </div>
   );
 };

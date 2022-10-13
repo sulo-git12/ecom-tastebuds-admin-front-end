@@ -1,23 +1,42 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import TableScrollbar from 'react-table-scrollbar';
 import "../styles/item.css";
 import { Button, Form } from "semantic-ui-react";
 
-const Outlet = () => {
+const EditOutlet = () => {
   //Get All Outlet Details
   const [Outlets, setAllOutlets] = useState([]);
-  
+  const [foodOutlet, setFoodOutlet] = useState([]);
+  const [OutletID, setOutletID] = useState();
+
+
   const fetchAllOutlets = async () => {
     const { data } = await axios.get("http://localhost:8088/api/outlets");
     setAllOutlets(data);
+  };
+
+
+  // Get specific outlet details by outletId.
+  const getFoodOutletById = async (paramId) => {
+    try {
+      
+      let URL = `http://localhost:8088/api/outlets/${paramId}`;
+
+      const { data } = await axios.get(URL);
+
+      setFoodOutlet(data);
+      console.log(data);
+      
+    } catch (error) {
+      console.log(error);
+    } 
+    
   };
 
   useEffect(() => {
     fetchAllOutlets();
   }, []);
 
-  const urldata = "http://localhost:8088/api/outlets";
 
   const [data, setData] = useState({
     outletNo: "",
@@ -34,10 +53,11 @@ const Outlet = () => {
     description: "",
     type: "",
     imageUrl: "",
+    isActive: "",
     email: "",
   });
 
- 
+  
   function handle(e) {
     const newdata = { ...data };
     newdata[e.target.id] = e.target.value;
@@ -45,45 +65,54 @@ const Outlet = () => {
     console.log(newdata);
   }
 
+  function rowclick(e){
+    getFoodOutletById(e);
+    setOutletID(e);
+  }
+  
+  
+  
   function submit(e) {
     e.preventDefault();
-
+    let urldata = `http://localhost:8088/api/outlets/${OutletID}`;
     axios
-      .post(urldata, {
-        outletNo: data.outletNo,
+      .put(urldata, {
         name: data.name,
-        address: {
-          no: data.no,
-          street: data.street,
-          city: data.city,
-        },
-        location: {
-          latitude: data.latitude,
-          longitude: data.longitude,
-        },
-        opening: {
-          days: data.days,
-          hours: data.hours,
-        },
-        type: [
-          data.type,
-        ],
-        rating: data.rating,
         contactNo: data.contactNo,
         email: data.email,
         description: data.description,
         imageUrl: data.imageUrl,
       })
       .then((res) => {
-        //console.log(res.data);
         alert(res.data);
       })
       .catch((res) => {
         let errs = res.response.data;
-        for (let err in errs) {
-          console.log(errs[err]);
-        }
-        // alert(res.errors)
+        console.log(errs);
+        // for (let err in errs) {
+        //   console.log(errs[err]);
+        // }
+      });
+  }
+
+
+  function submitDelete(e) {
+    e.preventDefault();
+    let urldata = `http://localhost:8088/api/outlets/${OutletID}`;
+    axios
+      .delete(urldata, {
+        
+      })
+      .then((res) => {
+        alert(res.data);
+        
+      })
+      .catch((res) => {
+        let errs = res.response.data;
+        console.log(errs);
+        // for (let err in errs) {
+        //   console.log(errs[err]);
+        // }
       });
   }
 
@@ -105,9 +134,10 @@ const Outlet = () => {
                   className="form-control"
                   id="outletNo"
                   onChange={(e) => handle(e)}
-                  value={data.outletNo}
+                  value={foodOutlet.outletNo}
                 />
               </Form.Field>
+              <p>{foodOutlet.outletNo}</p>
             </td>
             <td>
               <Form.Field>
@@ -120,119 +150,13 @@ const Outlet = () => {
                   value={data.name}
                 />
               </Form.Field>
-            </td>
-            <td>
-              <Form.Field>
-                <label>Street No :&nbsp;</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="no"
-                  onChange={(e) => handle(e)}
-                  value={data.no}
-                />
-              </Form.Field>
+              <p>{foodOutlet.name}</p>
             </td>
           </tr>
           <tr>
             <td>&nbsp;&nbsp;</td>
           </tr>
           <tr>
-            <td>
-              <Form.Field>
-                <label>Street :&nbsp;</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="street"
-                  onChange={(e) => handle(e)}
-                  value={data.street}
-                />
-                
-              </Form.Field>
-            </td>
-            <td>
-              <Form.Field>
-                <label>City :&nbsp;</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="city"
-                  onChange={(e) => handle(e)}
-                  value={data.city}
-                />
-              </Form.Field>
-            </td>
-            <td>
-              <Form.Field>
-                <label>Location Latitude :&nbsp;</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="latitude"
-                  onChange={(e) => handle(e)}
-                  value={data.latitude}
-                />
-              </Form.Field>
-            </td>
-          </tr>
-          <tr>
-            <td>&nbsp;&nbsp;</td>
-          </tr>
-          <tr>
-            <td>
-              <Form.Field>
-                <label>Location Longitude :&nbsp;</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="longitude"
-                  onChange={(e) => handle(e)}
-                  value={data.longitude}
-                />
-              </Form.Field>
-            </td>
-            <td>
-              <Form.Field>
-                <label>Opening Days :&nbsp;</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="days"
-                  onChange={(e) => handle(e)}
-                  value={data.days}
-                />
-              </Form.Field>
-            </td>
-            <td>
-              <Form.Field>
-                <label>Opening Hours :&nbsp;</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="hours"
-                  onChange={(e) => handle(e)}
-                  value={data.hours}
-                />
-              </Form.Field>
-            </td>
-          </tr>
-          <tr>
-            <td>&nbsp;&nbsp;</td>
-          </tr>
-          <tr>
-            <td>
-              <Form.Field>
-                <label>Ratings :&nbsp;</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="rating"
-                  onChange={(e) => handle(e)}
-                  value={data.rating}
-                />
-              </Form.Field>
-            </td>
             <td>
               <Form.Field>
                 <label>Contact No :&nbsp;</label>
@@ -244,6 +168,7 @@ const Outlet = () => {
                   value={data.contactNo}
                 />
               </Form.Field>
+              <p>{foodOutlet.contactNo}</p>
             </td>
             <td>
               <Form.Field>
@@ -256,6 +181,7 @@ const Outlet = () => {
                   value={data.description}
                 />
               </Form.Field>
+              <p>{foodOutlet.description}</p>
             </td>
           </tr>
           <tr>
@@ -273,18 +199,7 @@ const Outlet = () => {
                   value={data.email}
                 />
               </Form.Field>
-            </td>
-            <td>
-              <Form.Field>
-                <label>Type :&nbsp;</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="type"
-                  onChange={(e) => handle(e)}
-                  value={data.type}
-                />
-              </Form.Field>
+              <p>{foodOutlet.email}</p>
             </td>
             <td>
               <Form.Field>
@@ -297,6 +212,7 @@ const Outlet = () => {
                   value={data.imageUrl}
                 />
               </Form.Field>
+              <p>{foodOutlet.imageUrl}</p>
             </td>
           </tr>
           <tr>
@@ -308,13 +224,13 @@ const Outlet = () => {
         <tbody>
           <tr>
             <td>
-              <Button
-                type="submit"
-                name="save"
-                className="btn btn-primary"
-                onClick={(e) => submit(e)}
-              >
-                Save
+              <Button type="submit" onClick={(e) => submit(e)} name="update" className="btn btn-warning">
+                Update
+              </Button>
+            </td>
+            <td>
+              <Button type="submit" delete="delete" onClick={(e) => submitDelete(e)} className="btn btn-danger">
+                Delete
               </Button>
             </td>
           </tr>
@@ -325,11 +241,10 @@ const Outlet = () => {
         </table>
       </Form>
 
-     
-    <TableScrollbar height="400px">
       <table className="table table-bordered table-responsive">
         <thead className="thead-dark bg-info">
           <tr>
+            <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Address</th>
             <th scope="col">Type</th>
@@ -343,6 +258,14 @@ const Outlet = () => {
         <tbody>
           {Outlets.map((outlat) => (
             <tr key={outlat.outletNo}>
+              <th scope="row" align="center">
+                <img
+                  src="https://icons.iconarchive.com/icons/custom-icon-design/pretty-office-10/32/Pencil-icon.png"
+                  id={outlat.outletNo}
+                  alt="edit_data"
+                  onClick={(e) => rowclick(outlat.outletNo)}
+                />
+              </th>
               <td>{outlat.name}</td>
               <td>
                 {outlat.address.no},{outlat.address.street},
@@ -360,10 +283,9 @@ const Outlet = () => {
           ))}
         </tbody>
       </table>
-    </TableScrollbar>
     </div>
     </React.StrictMode>
   );
 };
 
-export default Outlet;
+export default EditOutlet;

@@ -6,10 +6,10 @@ const NavigationBar = () => {
     <div>
       <ul className="nav-ul">
         <li>
-          <Link to="/Admin/Home">Home</Link>
+          <Link to="/Admin/Home">TasteBuds-Admin</Link>
           <Link to="/Admin/Item">Item</Link>
           <Link to="/Admin/Outlet">Outlet</Link>
-          <Link to="/Admin/Profile">Profile</Link>
+          <Link to="/Admin/EditOutlet">Edit Outlet</Link>
         </li>
       </ul>
     </div>

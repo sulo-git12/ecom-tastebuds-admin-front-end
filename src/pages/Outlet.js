@@ -80,9 +80,10 @@ const Outlet = () => {
       })
       .catch((res) => {
         let errs = res.response.data;
-        for (let err in errs) {
-          console.log(errs[err]);
-        }
+        console.log(errs);
+        // for (let err in errs) {
+        //   console.log(errs[err]);
+        // }
         // alert(res.errors)
       });
   }

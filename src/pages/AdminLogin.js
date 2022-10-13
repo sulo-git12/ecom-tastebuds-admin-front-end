@@ -75,9 +75,19 @@ function AdminLogin() {
   return (
     <div className="app">
       <div className="login-form">
-        <img src="https://cdn-icons-png.flaticon.com/512/2830/2830305.png" alt="logo"></img> 
-        <div className="title">Sign In</div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        <table align='center'>
+          <tbody>
+            <tr>
+              <td><img src="https://cdn-icons-png.flaticon.com/512/2830/2830305.png" alt="logo"></img></td>
+            </tr>
+            <tr>
+              <td><div className="title">Sign In</div></td>
+            </tr>
+          </tbody>
+        </table>
+        {isSubmitted ? <div>
+                    { window.open("/Admin/Home")};
+         </div> : renderForm}
       </div>
     </div>
   );
